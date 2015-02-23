@@ -4,7 +4,8 @@
   "description": "plan yo mealz, yo",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "bower install"
   },
   "engine": {
     "node": "0.10.x"
