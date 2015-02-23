@@ -1,0 +1,23 @@
+{
+  "name": "meal-planner",
+  "version": "0.0.1",
+  "homepage": "https://github.com/derekgeeting/meal-planner",
+  "authors": [
+    "Derek Geeting (derekgeeting) <derekgeeting@gmail.com>"
+  ],
+  "description": "meal planner",
+  "license": "MIT",
+  "directory": "public/bower_components",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.13",
+    "angular-route": "~1.3.13",
+    "angular-local-storage": "~0.1.5"
+  }
+}
