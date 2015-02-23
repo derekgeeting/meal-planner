@@ -4,7 +4,9 @@ angular.module('app', [
   'app.plan',
   'app.meals',
   'app.grocery',
-  'app.auth'
+  'app.auth',
+  'app.account',
+  'ui.bootstrap'
 ]).
 config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
   $routeProvider.otherwise({redirectTo: '/plan'});
@@ -43,6 +45,7 @@ run(['$rootScope', '$http', '$location', 'localStorageService', function($rootSc
 
   $rootScope.logout = function() {
     localStorageService.remove('token');
+    localStorageService.remove('user');
     $rootScope.loggedIn = false;
     $rootScope.user = {};
     $rootScope.$broadcast('logout');

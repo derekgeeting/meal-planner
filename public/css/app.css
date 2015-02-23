@@ -1,3 +1,11 @@
 .active {
   font-weight: bold;
 }
+
+.main-tabs {
+  /*margin-top: -1px;*/
+}
+.main-tabs li {
+  width: 25%;
+  text-align: center;
+}
