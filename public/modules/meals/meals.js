@@ -7,14 +7,15 @@ angular.module('app.meals', ['ngRoute'])
   });
 }])
 
-.controller('MealsCtrl', ['$scope', '$http', function($scope, $http) {
+.controller('MealsCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
   $scope.meals = [];
   $scope.meal = {};
   $scope.ingredient = {};
   $scope.showIngredientForm = false;
   $scope.showMealForm = false;
   $scope.categories = ['produce','dairy','butcher','bulk items','bakery','frozen','canned','household','other'];
-  $scope.qtyTypes = ['tsp','tbs','oz','lb','c','pt','qt','gal','liter','qtr','half','whole'].sort();
+  $scope.qtyTypes = ['tsp','tbs','oz','lb','c','pt','qt','gal','liter','qtr','half','whole','box','can'].sort();
+  $scope.days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
   $scope.saveIngredient = function() {
     $scope.meal.ingredients = ($scope.meal.ingredients||[]).concat($scope.ingredient);
@@ -27,12 +28,15 @@ angular.module('app.meals', ['ngRoute'])
     $scope.showIngredientForm = false;
   }
 
-  $scope.saveMeal = function() {
+  $scope.saveMeal = function(cb) {
     //$scope.meals = $scope.meals.concat($scope.meal);
     $http.post('/api/meals', $scope.meal)
       .success( function(data, status) {
         console.log('saved',data);
         $scope.loadMeals();
+        if(cb) {
+          cb(data.meal);
+        }
       })
       .error( function(data, status) {
         console.log('Error',data,status);
@@ -61,6 +65,28 @@ angular.module('app.meals', ['ngRoute'])
         $scope.meals = data.meals;
       }
     );
+  }
+
+  $scope.addToDay = function(mealId, day) {
+    $http.post('/api/plan', {
+      day: day,
+      meal: mealId
+    })
+      .success( function(data, status) {
+        console.log('saved meal plan',data);
+        $rootScope.user = data.user;
+      })
+      .error( function(data, status) {
+        console.log('Error',data,status);
+      }
+    );
+  }
+
+  $scope.saveAndAdd = function(day) {
+    var mealId = $scope.meal._id;
+    $scope.saveMeal( function(meal) {
+      $scope.addToDay(meal._id, day);
+    });
   }
 
   $scope.loadMeals();

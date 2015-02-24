@@ -7,5 +7,12 @@ angular.module('app.grocery', ['ngRoute'])
   });
 }])
 
-.controller('GroceryCtrl', ['$scope', function($scope) {
+.controller('GroceryCtrl', ['$rootScope', '$scope', function($rootScope, $scope) {
+
+  $scope.getList = function() {
+    $scope.types = _($rootScope.user.plan).values().flatten().pluck('ingredients').flatten().pluck('category').uniq().value();
+    $scope.itemsByCategory = _($rootScope.user.plan).values().flatten().pluck('ingredients').flatten().groupBy(function(o){return o.category}).value();
+  }
+
+  $scope.getList();
 }]);

@@ -74,6 +74,20 @@
 
   <div ng-hide="showIngredientForm">
     <button class="btn btn-primary" ng-click="saveMeal()">Save</button>
+    <div class="btn-group" dropdown is-open="status.isopen">
+      <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+        Add to..<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li ng-repeat="day in days"><a href="" ng-click="saveAndAdd(day)">{{day}}</a></li>
+      </ul>
+    </div>
     <button class="btn btn-default" ng-click="cancelMeal()">Cancel</button>
   </div>
 </form>
+<!-- <nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container">
+    <button class="btn btn-primary navbar-btn"><i class="fa fa-search"></i></button>
+    <button class="btn btn-primary navbar-btn" ng-click="showMealForm=true"><i class="fa fa-plus"></i></button>
+  </div>
+</nav> -->

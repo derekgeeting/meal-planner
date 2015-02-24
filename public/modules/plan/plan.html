@@ -1,1 +1,9 @@
-<p>Meal Plan</p>
+<div ng-repeat="day in days">
+  <h2>{{day}}</h2>
+  <div class="meal" ng-repeat="meal in user.plan[day]">
+    <span class="label label-default">{{meal.type}}</span> {{meal.name}}
+    <button class="btn btn-default pull-right" ng-click="confirmDelete=true" ng-hide="confirmDelete"><i class="fa fa-trash"></i></button>
+    <button class="btn btn-default pull-right" ng-click="confirmDelete=false" ng-show="confirmDelete">Cancel</button>
+    <button class="btn btn-primary pull-right" ng-click="user.plan[day].splice($index,1); deletePlan(day,$index)" ng-show="confirmDelete">Really?</button>
+  </div>
+</div>

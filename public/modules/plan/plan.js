@@ -7,5 +7,15 @@ angular.module('app.plan', ['ngRoute'])
   });
 }])
 
-.controller('MealPlanCtrl', ['$scope', '$http', function($scope, $http) {
+.controller('MealPlanCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
+    $scope.days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+    $scope.deletePlan = function(day, index) {
+      $http.delete('/api/plan/'+day+'/'+index)
+        .success( function(data) {
+          console.log('deleted:',data);
+          $rootScope.user = data.user;
+        }
+      );
+    }
 }]);

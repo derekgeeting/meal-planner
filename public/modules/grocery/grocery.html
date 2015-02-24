@@ -1,1 +1,7 @@
-<p>Grocery</p>
+<div ng-repeat="type in types">
+  <h3>{{type}}</h3>
+  <div class="ingredient" ng-repeat="ingredient in itemsByCategory[type]">
+    <input ng-model="ingredient.checked" type="checkbox">
+    {{ingredient.qty}} {{ingredient.qtyType}} {{ingredient.name}}
+  </div>
+</div>
