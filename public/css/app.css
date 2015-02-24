@@ -9,3 +9,40 @@
   width: 25%;
   text-align: center;
 }
+
+#edit-meal-form input {
+  margin: 5px 0;
+}
+
+#servings-selector {
+  width: 100%;
+}
+
+#servings-selector label {
+  width: 12.5%;
+}
+
+#mealtype-selector {
+  width: 100%;
+}
+
+#mealtype-selector label {
+  width: 20%;
+}
+#preptime-selector {
+  width: 100%;
+}
+
+#preptime-selector label {
+  width: 25%;
+}
+
+.ingredient {
+  min-height: 40px;
+  font-size: 20px;
+}
+
+.meal {
+  min-height: 40px;
+  font-size: 20px;
+}

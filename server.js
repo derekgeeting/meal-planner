@@ -4,6 +4,7 @@ var methodOverride = require('method-override');
 var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
 var _ = require('lodash');
+var mongo = require('mongoskin');
 
 var app = express();
 app.db = require('./db/db.js');
@@ -44,10 +45,42 @@ app.get('/api/user', function(req,res) {
   });
 });
 
-app.get('/api/test', function(req,res) {
-  // console.log(req);
-  res.json({
-    user: req.user
+app.get('/api/meals', function(req,res) {
+  app.db.meal.find({owner:mongo.helper.toObjectID(req.user._id)}).toArray(function(err,meals) {
+    res.json({
+      meals: meals
+    });
+  });
+});
+
+app.delete('/api/meals/:id', function(req,res) {
+  app.db.meal.removeById(req.params.id, function(err,result) {
+    if(err) {
+      res.status(500).send({
+        error: err
+      });
+    } else {
+      res.json({
+        success:true
+      });
+    }
+  });
+});
+
+app.post('/api/meals', function(req,res) {
+  var meal = req.body;
+  meal.owner = mongo.helper.toObjectID(req.user._id);
+  if(meal._id) {
+    meal._id = mongo.helper.toObjectID(meal._id);
+  }
+  app.db.meal.save(meal, function(err, savedMeal) {
+    if(err || !savedMeal || savedMeal.length===0) {
+      res.status(500).send({error:'crap happens'});
+    } else {
+      res.json({
+        meal: savedMeal
+      });
+    }
   });
 });
 

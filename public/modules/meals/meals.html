@@ -1,1 +1,79 @@
-<p>Meals</p>
+<div class="btn-toolbar" ng-hide="showMealForm">
+  <button class="btn btn-primary"><i class="fa fa-search"></i></button>
+  <button class="btn btn-primary" ng-click="showMealForm=true"><i class="fa fa-plus"></i></button>
+</div>
+<div id="meals-list" ng-hide="showMealForm">
+  <div class="meal" ng-repeat="m in meals">
+    {{m.name}}
+    <button class="btn btn-default pull-right" ng-click="confirmDelete=true" ng-hide="confirmDelete"><i class="fa fa-trash"></i></button>
+    <button class="btn btn-default pull-right" ng-click="confirmDelete=false" ng-show="confirmDelete">Cancel</button>
+    <button class="btn btn-primary pull-right" ng-click="meals.splice($index,1); deleteMeal(m)" ng-show="confirmDelete">Really?</button>
+    <button class="btn btn-default pull-right" ng-click="$parent.showMealForm=true; $parent.meal=m"><i class="fa fa-edit"></i></button>
+  </div>
+</div>
+<form id="edit-meal-form" ng-show="showMealForm">
+  <input type="text" class="form-control" placeholder="name" ng-model="meal.name">
+  <input type="text" class="form-control" placeholder="url" ng-model="meal.url">
+  <input type="text" class="form-control" placeholder="instructions" ng-model="meal.instructions">
+  <div class="form-group" id="servings-container">
+    <label for="servings-selector">Servings</label>
+    <div id="servings-selector" class="btn-group">
+      <label class="btn btn-primary" ng-model="meal.servings" btn-radio="'1'">1</label>
+      <label class="btn btn-primary" ng-model="meal.servings" btn-radio="'2'">2</label>
+      <label class="btn btn-primary" ng-model="meal.servings" btn-radio="'3'">3</label>
+      <label class="btn btn-primary" ng-model="meal.servings" btn-radio="'4'">4</label>
+      <label class="btn btn-primary" ng-model="meal.servings" btn-radio="'5'">5</label>
+      <label class="btn btn-primary" ng-model="meal.servings" btn-radio="'6'">6</label>
+      <label class="btn btn-primary" ng-model="meal.servings" btn-radio="'7'">7</label>
+      <label class="btn btn-primary" ng-model="meal.servings" btn-radio="'8'">8</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="mealtype-selector">Meal Type</label>
+    <div id="mealtype-selector" class="btn-group">
+      <label class="btn btn-primary" ng-model="meal.type" btn-radio="'breakfast'">Breakfast</label>
+      <label class="btn btn-primary" ng-model="meal.type" btn-radio="'lunch'">Lunch</label>
+      <label class="btn btn-primary" ng-model="meal.type" btn-radio="'dinner'">Dinner</label>
+      <label class="btn btn-primary" ng-model="meal.type" btn-radio="'snack'">Snack</label>
+      <label class="btn btn-primary" ng-model="meal.type" btn-radio="'dessert'">Dessert</label>
+    </div>
+  </div>
+  <!-- <input type="text" class="form-control" placeholder="tags (comma separated)" ng-model="meal.tags"> -->
+  <div class="form-group">
+    <label for="preptime-selector">Prep Time (in minutes)</label>
+    <div id="preptime-selector" class="btn-group">
+      <label class="btn btn-primary" ng-model="meal.preptime" btn-radio="'15'">0-15</label>
+      <label class="btn btn-primary" ng-model="meal.preptime" btn-radio="'30'">15-30</label>
+      <label class="btn btn-primary" ng-model="meal.preptime" btn-radio="'60'">30-60</label>
+      <label class="btn btn-primary" ng-model="meal.preptime" btn-radio="'120'">60+</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="ingredients-list">Ingredients</label>
+    <div id="ingredients-list" class="">
+      <div class="ingredient" ng-repeat="ingredient in meal.ingredients">
+        {{ingredient.qty}} {{ingredient.qtyType}} {{ingredient.name}}
+        <button class="btn btn-default pull-right" ng-click="meal.ingredients.splice($index,1)"><i class="fa fa-trash"></i></button>
+      </div>
+    </div>
+    <div id="ingredients-form" ng-show="showIngredientForm">
+      <input type="text" class="form-control" placeholder="name" ng-model="ingredient.name">
+      <input type="text" class="form-control" placeholder="qty (1, 1/2, 3, etc)" ng-model="ingredient.qty">
+      <select class="form-control" ng-options="o as o for o in qtyTypes" ng-model="ingredient.qtyType">
+        <option value='' disabled>qty type</option>
+      </select>
+      <select class="form-control" ng-options="o as o for o in categories" ng-model="ingredient.category">
+        <option value='' disabled>category</option>
+      </select>
+      <button class="btn btn-primary" ng-click="saveIngredient()">Save Ingredient</button>
+      <button class="btn btn-default" ng-click="cancelIngredient()">Cancel</button>
+    </div>
+    <button class="btn btn-primary" ng-hide="showIngredientForm" ng-click="showIngredientForm=true">Add Ingredient</button>
+  </div>
+
+  <div ng-hide="showIngredientForm">
+    <button class="btn btn-primary" ng-click="saveMeal()">Save</button>
+    <button class="btn btn-default" ng-click="cancelMeal()">Cancel</button>
+  </div>
+</form>
