@@ -6,9 +6,10 @@
   <title>Meal Planner</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 <body>
   <ul class="nav nav-tabs main-tabs" ng-show="loggedIn">
@@ -20,7 +21,7 @@
 
   <div ng-view style="margin:10px"></div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.3.0/lodash.min.js"></script>
+  <script src="bower_components/lodash/lodash.min.js"></script>
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
