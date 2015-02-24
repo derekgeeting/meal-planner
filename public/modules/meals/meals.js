@@ -13,7 +13,7 @@ angular.module('app.meals', ['ngRoute'])
   $scope.ingredient = {};
   $scope.showIngredientForm = false;
   $scope.showMealForm = false;
-  $scope.categories = ['produce','dairy','butcher','bulk items','bakery','frozen','canned','household','other'];
+  $scope.categories = ['produce','dairy','butcher','bulk items','bakery','frozen','canned','household','spices','condiments','dry goods','drinks','snacks','baking','health'];
   $scope.qtyTypes = ['tsp','tbs','oz','lb','c','pt','qt','gal','liter','qtr','half','whole','box','can'].sort();
   $scope.days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
