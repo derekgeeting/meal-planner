@@ -208,7 +208,6 @@ app.post('/api/list/check', function(req,res) {
       if plan and unchecked
         remove from list
     */
-    console.log(ingredient);
     if(ingredient.mealId) {
       user.list = user.list||{};
       if( ingredient.checked ) {
