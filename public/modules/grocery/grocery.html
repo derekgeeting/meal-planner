@@ -1,7 +1,14 @@
-<div ng-repeat="type in types">
-  <h3>{{type}}</h3>
-  <div class="ingredient" ng-repeat="ingredient in itemsByCategory[type]">
-    <input ng-model="ingredient.checked" type="checkbox">
+<div ng-repeat="category in categories">
+  <h3>{{category}}</h3>
+  <div class="ingredient" ng-repeat="ingredient in uncheckedIngredientsByCategory[category]">
+    <input ng-model="ingredient.checked" type="checkbox" ng-change="check(category,ingredient,$index)">
+    {{ingredient.qty}} {{ingredient.qtyType}} {{ingredient.name}}
+  </div>
+</div>
+<div>
+  <h3>Completed</h3>
+  <div class="ingredient" ng-repeat="ingredient in checkedIngredients">
+    <input ng-model="ingredient.checked" type="checkbox" ng-change="uncheck(category,ingredient,$index)">
     {{ingredient.qty}} {{ingredient.qtyType}} {{ingredient.name}}
   </div>
 </div>

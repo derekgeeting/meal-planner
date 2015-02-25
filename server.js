@@ -163,6 +163,82 @@ app.post('/api/plan', function(req,res) {
   });
 });
 
+//add a one-off item to list
+app.post('/api/list', function(req,res) {
+  var ingredient = req.body.ingredient;
+  app.db.user.findById(mongo.helper.toObjectID(req.user._id), function(err,user) {
+    user.list = user.list||{};
+    user.list.oneoff = (user.list.oneoff||[]).concat(ingredient);
+    app.db.user.save(user, function(err, savedUser) {
+      getUser(mongo.helper.toObjectID(req.user._id), function(err,theUser) {
+        res.json({
+          user: theUser
+        });
+      });
+    });
+  });
+});
+
+//remove a one-off item from list
+app.delete('/api/list', function(req,res) {
+  var ingredient = req.body.ingredient;
+  app.db.user.findById(mongo.helper.toObjectID(req.user._id), function(err,user) {
+    _.remove(user.list.oneoff, function(i) {
+      return i.qty==ingredient.qty && i.name==ingredient.name && i.qtyType==ingredient.qtyType && i.category==ingredient.category;
+    });
+    app.db.user.save(user, function(err, savedUser) {
+      getUser(mongo.helper.toObjectID(req.user._id), function(err,theUser) {
+        res.json({
+          user: theUser
+        });
+      });
+    });
+  });
+});
+
+//check/uncheck an item from list
+app.post('/api/list/check', function(req,res) {
+  var ingredient = req.body.ingredient;
+  app.db.user.findById(mongo.helper.toObjectID(req.user._id), function(err,user) {
+    /*
+      if oneoff
+        update checked status
+      if plan and checked
+        add to list
+      if plan and unchecked
+        remove from list
+    */
+    console.log(ingredient);
+    if(ingredient.mealId) {
+      user.list = user.list||{};
+      if( ingredient.checked ) {
+        //add it to the list
+        user.list.plan = (user.list.plan||[]).concat(ingredient);
+      } else {
+        //remove it from the list
+        _.remove(user.list.plan, function(i) {
+          return i.qty==ingredient.qty && i.name==ingredient.name && i.qtyType==ingredient.qtyType && i.category==ingredient.category && i.mealId==ingredient.mealId;
+        });
+      }
+    } else {
+      var existing = _.find(user.list.oneoff, function(i) {
+        return i.qty==ingredient.qty && i.name==ingredient.name && i.qtyType==ingredient.qtyType && i.category==ingredient.category;
+      });
+      if(existing) {
+        existing.checked = ingredient.checked;
+      }
+    }
+
+    app.db.user.save(user, function(err, savedUser) {
+      getUser(mongo.helper.toObjectID(req.user._id), function(err,theUser) {
+        res.json({
+          user: theUser
+        });
+      });
+    });
+  });
+});
+
 app.listen(app.get('port'), function() {
   console.log("app is running on port:" + app.get('port'))
 })
