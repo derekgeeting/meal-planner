@@ -49,6 +49,7 @@ angular.module('app.grocery', ['ngRoute'])
 
   $scope.check = function(category,ingredient,index) {
     console.log('check',category,ingredient,index);
+    ingredient.checked = true;
     $scope.uncheckedIngredientsByCategory[category].splice(index,1);
     $http.post('/api/list/check', {ingredient: ingredient})
       .success(function(data) {
@@ -61,6 +62,7 @@ angular.module('app.grocery', ['ngRoute'])
 
   $scope.uncheck = function(category,ingredient,index) {
     console.log('uncheck',category,ingredient,index);
+    ingredient.checked = false;
     $scope.checkedIngredients.splice(index,1);
     $http.post('/api/list/check', {ingredient: ingredient})
       .success(function(data) {

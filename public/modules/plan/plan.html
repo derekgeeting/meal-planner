@@ -1,9 +1,23 @@
-<div ng-repeat="day in days">
-  <h2>{{day}}</h2>
-  <div class="meal" ng-repeat="meal in user.plan[day]">
+<ul class="list-group">
+<div class="" ng-repeat="day in days">
+  <li class="list-group-item list-group-item-info meal-plan-meal clearfix">
+    <span class="list-header">{{day}}</span>
+    <span class="btn-group pull-right" dropdown is-open="status.isopen">
+      <button type="button" class="btn btn-sm btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+        <i class="fa fa-plus"></i>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li ng-repeat="mealType in mealTypes"><a href="" ng-click="addRandomMeal(day,mealType)">{{mealType}}</a></li>
+      </ul>
+    </span>
+</li>
+  <li class="list-group-item meal-plan-meal clearfix" ng-repeat="meal in user.plan[day]">
     <span class="label label-default">{{meal.type}}</span> {{meal.name}}
-    <button class="btn btn-default pull-right" ng-click="confirmDelete=true" ng-hide="confirmDelete"><i class="fa fa-trash"></i></button>
-    <button class="btn btn-default pull-right" ng-click="confirmDelete=false" ng-show="confirmDelete">Cancel</button>
-    <button class="btn btn-primary pull-right" ng-click="user.plan[day].splice($index,1); deletePlan(day,$index)" ng-show="confirmDelete">Really?</button>
-  </div>
+    <span class="pull-right">
+      <button class="btn btn-sm btn-danger" ng-click="confirmDelete=true" ng-hide="confirmDelete"><i class="fa fa-trash"></i></button>
+      <button class="btn btn-sm btn-danger" ng-click="user.plan[day].splice($index,1); deletePlan(day,$index)" ng-show="confirmDelete"><i class="fa fa-thumbs-o-up"></i></button>
+      <button class="btn btn-sm btn-default" ng-click="confirmDelete=false" ng-show="confirmDelete"><i class="fa fa-times-circle"></i></button>
+    </span>
+  </li>
 </div>
+</ul>

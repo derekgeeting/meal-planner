@@ -3,7 +3,7 @@
 }
 
 .main-tabs {
-  /*margin-top: -1px;*/
+  width: 100%;
 }
 .main-tabs li {
   width: 25%;
@@ -47,4 +47,33 @@
   font-size: 20px;
 }
 
-body { padding-bottom: 50px; }
+body { 
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.list-group-item:last-child, .list-group-item:first-child {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.meal-plan-meal, .list-ingredient {
+  padding-left: 4px;
+  padding-right: 8px;
+}
+
+.check-button {
+  font-size: 34px;
+  line-height: 1.333333;
+  cursor: pointer;
+  position: absolute;
+  right: 4px;
+  top: -1px;
+  color: #c3c3c3;
+}
+
+.list-header {
+  font-size: 20px;
+}

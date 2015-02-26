@@ -9,6 +9,7 @@ angular.module('app.plan', ['ngRoute'])
 
 .controller('MealPlanCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
     $scope.days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    $scope.mealTypes = ['breakfast', 'lunch', 'dinner', 'snack', 'dessert'];
 
     $scope.deletePlan = function(day, index) {
       $http.delete('/api/plan/'+day+'/'+index)

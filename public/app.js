@@ -37,6 +37,13 @@ factory('authInterceptor', ['$rootScope', '$q', 'localStorageService', '$locatio
 }]).
 run(['$rootScope', '$http', '$location', 'localStorageService', function($rootScope, $http, $location, localStorageService) {
 
+  var pageTitles = {
+    '/plan': 'Meal Plan',
+    '/meals': 'Meals',
+    '/grocery': 'Grocery List',
+    '/account': 'Account'
+  }
+
   $rootScope.setLoggedInUser = function(user) {
     $rootScope.user = user;
     $rootScope.loggedIn = true;
@@ -56,6 +63,10 @@ run(['$rootScope', '$http', '$location', 'localStorageService', function($rootSc
     return $location.path().substr(0,path.length)===path;
   }
   
+  $rootScope.$on('$routeChangeSuccess', function(e, current, pre) {
+    $rootScope.currentPage = pageTitles[$location.path()];
+  });
+
   $http.get('/api/user').
     success(function(data,status,headers,config) {
       $rootScope.setLoggedInUser(data.user);

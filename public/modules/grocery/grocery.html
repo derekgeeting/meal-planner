@@ -1,14 +1,17 @@
-<div ng-repeat="category in categories">
-  <h3>{{category}}</h3>
-  <div class="ingredient" ng-repeat="ingredient in uncheckedIngredientsByCategory[category]">
-    <input ng-model="ingredient.checked" type="checkbox" ng-change="check(category,ingredient,$index)">
-    {{ingredient.qty}} {{ingredient.qtyType}} {{ingredient.name}}
+<ul class="list-group">
+  <div ng-repeat="category in categories">
+    <li class="list-group-item list-group-item-info">{{category}}</li>
+    <li class="list-group-item list-ingredient clearfix" ng-repeat="ingredient in uncheckedIngredientsByCategory[category]">
+      <span class="pull-right check-button" ng-click="check(category,ingredient,$index)"><i class="fa fa-square-o"></i></span>
+      <span>{{ingredient.qty}} {{ingredient.qtyType}} {{ingredient.name}}</span>
+    </li>
   </div>
-</div>
-<div>
-  <h3>Completed</h3>
-  <div class="ingredient" ng-repeat="ingredient in checkedIngredients">
-    <input ng-model="ingredient.checked" type="checkbox" ng-change="uncheck(category,ingredient,$index)">
-    {{ingredient.qty}} {{ingredient.qtyType}} {{ingredient.name}}
+
+  <div>
+    <li class="list-group-item list-group-item-info">Completed</li>
+    <li class="list-group-item list-ingredient clearfix" ng-repeat="ingredient in checkedIngredients">
+      <span class="pull-right check-button" ng-click="uncheck(category,ingredient,$index)"><i class="fa fa-check-square-o"></i></span>
+      <span>{{ingredient.qty}} {{ingredient.qtyType}} {{ingredient.name}}</span>
+    </li>
   </div>
-</div>
+</ul>
