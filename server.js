@@ -68,15 +68,17 @@ var getUser = function(userId, cb) {
 app.post('/login', function(req,res) {
   app.db.user.findOne({
     username: req.body.username
-  }, function(err, user) {
+  }, function(err, simpleUser) {
     if(err) {
       res.status(500).send({message:'whoopsie'});
-    } else if(!user) {
+    } else if(!simpleUser) {
       res.status(401).send({message:'Incorrect username or password'});
     } else {
-      res.json({
-        token: createToken(user),
-        user: user
+      getUser(mongo.helper.toObjectID(simpleUser._id), function(err, user) {
+        res.json({
+          token: createToken(user),
+          user: user
+        });
       });
     }
   });
